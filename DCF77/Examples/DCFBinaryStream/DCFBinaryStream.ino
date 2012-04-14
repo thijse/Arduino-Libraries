@@ -11,9 +11,9 @@
   do this by adding the   #define VERBOSE_DEBUG 1   in Utils.cpp. 
  */
 
-#include "Utils.h"
-#include "DCF77.h"
-#include "Time.h"
+#include <Utils.h>
+#include <DCF77.h>
+#include <Time.h>
 using namespace Utils;
 
 #define DCF_PIN 2	         // Connection pin to DCF 77 device
@@ -34,8 +34,8 @@ void setup() {
 
 void loop() {
 	delay(1000);
-	if (DCF.receivedTimeUpdate()) {
-		time_t DCFtime = DCF.getTime();
+	time_t DCFtime = DCF.getTime();
+	if (DCFtime!=0) {
 		digitalClockDisplay(DCFtime);
 	}	
 }

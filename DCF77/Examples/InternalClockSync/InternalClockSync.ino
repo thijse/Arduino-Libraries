@@ -30,10 +30,10 @@ void setup() {
 
 void loop() {
   delay(1000);
-  if (DCF.receivedTimeUpdate()) // Check if new DCF77 time is available
+  time_t DCFtime = DCF.getTime(); // Check if new DCF77 time is available
+  if (DCFtime!=0)
   {
     Serial.println("Time is updated");
-    time_t DCFtime = DCF.getTime();
     setTime(DCFtime);
   }	
   digitalClockDisplay();  

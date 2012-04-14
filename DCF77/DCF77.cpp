@@ -19,9 +19,9 @@
   11 Apr 2012 - initial release 
 */
 
-#include "DCF77.h"
-#include "Utils.h"
-#include "Time.h"
+#include <DCF77.h>
+#include <Utils.h>
+#include <Time.h>
 
 using namespace Utils;
 
