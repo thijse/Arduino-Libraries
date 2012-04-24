@@ -1,43 +1,29 @@
-Readme file for Arduino DCF77 Library
+ReadMe file for Arduino DCF77 Library 0.9.5
+//https://github.com/thijse/Arduino-Libraries/downloads
+Thijs Elenbaas 2012
 
-Time is a library that provides timekeeping functionality for Arduino.
+This work is licensed under the under the terms of the GNU Lesser General Public License 
+as published by the Free Software Foundation; either version 2.1 of the License, or 
+(at your option) any later version. To view a copy of this license, write to the 
+Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-Example sketches illustrate how similar sketch code can be used with: a Real Time Clock,
-internet NTP time service, GPS time data, and Serial time messages from a computer
-for time synchronization.
+--------------------------------------------------------------------------------
+DCF77 is a library that provides timekeeping functionality for Arduino.
 
-The functions available in the library include:
+This library is designed to work in conjunction with the Arduino Time library at
+http://www.arduino.cc/playground/Code/Time. The Time library must be referenced
+in your sketch with #include <Time.h>. This documentation assumes some
+familiarity with the Time library.
 
-The Time directory contains the Time library and some example sketches
-illustrating how the library can be used with various time sources:
+The primary aim of this library is convert the pulse sequence coming from a DC77 receiver
+into into a valid and up-to-date time, The DC& receiver picks up the the atomic time (CET) 
+broadcasted by the DCF77 radiostation which outputs the local (CET) time. 
 
+Example sketches illustrate show 
+1) how to debug the incoming signal,
+2) how to use the library to retreive a valid time
+3) how to use the library in conjunction with the setSyncProvider callback provided
+   by the Time library
+4) how to convert the time to a different timezone   
 
--TimeGPS gets time from a GPS
- This requires the TinyGPS and NewSoftSerial libraries from Mikal Hart:
- http://arduiniana.org/libraries/TinyGPS and http://arduiniana.org/libraries/newsoftserial/
-
-Differences between this code and the playground DateTime library
-although the Time library is based on the DateTime codebase, the API has changed.
-Changes in the Time library API:
-- time elements are functions returning int (they are variables in DateTime)
-- Years start from 1970 
-- days of the week and months start from 1 (they start from 0 in DateTime)
-- DateStrings do not require a seperate library
-- time elements can be accessed non-atomically (in DateTime they are always atomic)
-- function added to automatically sync time with extrnal source
-- localTime and maketime parameters changed, localTime renamed to breakTime
- 
-Technical notes:
-
-Internal system time is based on the standard Unix time_t.
-The value is the number of seconds since Jan 1 1970.
-System time begins at zero when the sketch starts.
-  
-The internal time can be automatically synchronized at regular intervals to an external time source.
-This is enabled by calling the setSyncProvider(provider) function - the provider argument is
-the address of a function that returns the current time as a time_t.
-See the sketches in the examples directory for usage.
-
-The default interval for re-syncing the time is 5 minutes but can be changed by calling the 
-setSyncInterval( interval) method to set the number of seconds between re-sync attempts.
 

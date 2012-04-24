@@ -25,10 +25,14 @@ private:
 	static time_t latestupdatedTime;           	
 	static  time_t processingTimestamp;
 	static  time_t previousProcessingTimestamp;		
-
+	static unsigned char CEST;
 	// DCF time format structure
 	struct DCF77Buffer {
-	  unsigned long long prefix		:21;
+	  //unsigned long long prefix		:21;
+	  unsigned long long prefix		:17;
+	  unsigned long long CEST		:1; // CEST 
+	  unsigned long long CET		:1; // CET 
+	  unsigned long long unused		:2; // unused bits
 	  unsigned long long Min		:7;	// minutes
 	  unsigned long long P1			:1;	// parity minutes
 	  unsigned long long Hour		:6;	// hours
@@ -39,7 +43,8 @@ private:
 	  unsigned long long Year		:8;	// year (5 -> 2005)
 	  unsigned long long P3			:1;	// parity
 	};
-
+	
+	
 	// DCF Parity format structure
 	struct ParityFlags{
 		unsigned char parityFlag	:1;
@@ -59,9 +64,9 @@ private:
 	static unsigned long long processingBuffer;
 
 	// Pulse flanks
-	static   int flankUp;
-	static   int flankDown;
-	static   int PreviousflankUp;
+	static   int leadingEdge;
+	static   int trailingEdge;
+	static   int PreviousLeadingEdge;
 	static   bool Up;
 	
 	//Private functions
@@ -80,6 +85,7 @@ public:
 	DCF77(int DCF77Pin, int DCFinterrupt); 
 	
 	static time_t getTime(void);
+	static time_t getUTCTime(void);
 	static void Start(void);
 	static void Stop(void);
 	static void int0handler();

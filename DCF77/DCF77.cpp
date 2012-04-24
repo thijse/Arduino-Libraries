@@ -17,11 +17,14 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   
   11 Apr 2012 - initial release 
+  23 Apr 2012 - added UTC support
 */
 
-#include <DCF77.h>
+#include <DCF77.h>       //https://github.com/thijse/Arduino-Libraries/downloads
+#include <Time.h>        //http://www.arduino.cc/playground/Code/Time
 #include <Utils.h>
-#include <Time.h>
+
+#define _DCF77_VERSION 0_9_5 // software version of this library
 
 using namespace Utils;
 
@@ -44,9 +47,9 @@ DCF77::DCF77(int DCF77Pin, int DCFinterrupt)
  */
 void DCF77::initialize(void) 
 {	
-	flankUp               = 0;
-	flankDown             = 0;
-	PreviousflankUp       = 0;
+	leadingEdge           = 0;
+	trailingEdge          = 0;
+	PreviousLeadingEdge   = 0;
 	Up                    = false;
 	runningBuffer		  = 0;
 	FilledBufferAvailable = false;
@@ -55,6 +58,7 @@ void DCF77::initialize(void)
 	flags.parityFlag      = 0;
 	flags.parityHour      = 0;
 	flags.parityMin       = 0;
+	CEST				  = 0;
 }
 
 /**
@@ -91,25 +95,25 @@ void DCF77::int0handler() {
 
 	// If flank is detected quickly after previous flank up
 	// this will be an incorrect pulse that we shall reject
-	if ((flankTime-PreviousflankUp)<DCFRejectionTime) {
+	if ((flankTime-PreviousLeadingEdge)<DCFRejectionTime) {
 		return;
 	}
 	if(sensorValue==HIGH) {
 		if (!Up) {
 			// Flank up
-			flankUp=flankTime;
+			leadingEdge=flankTime;
 			Up = true;		                
 		} 
 	} else {
 		if (Up) {
 			// Flank down
-			flankDown=flankTime;
-			int difference=flankDown - flankUp;            
+			trailingEdge=flankTime;
+			int difference=trailingEdge - leadingEdge;            
           		
-			if ((flankUp-PreviousflankUp) > DCFSyncTime) {
+			if ((leadingEdge-PreviousLeadingEdge) > DCFSyncTime) {
 				finalizeBuffer();
 			}         
-			PreviousflankUp = flankUp;       
+			PreviousLeadingEdge = leadingEdge;       
 			// Distinguish between long and short pulses
 			if (difference < DCFSplitTime) { appendSignal(0); } else { appendSignal(1); }
 			Up = false;	 
@@ -260,10 +264,11 @@ bool DCF77::processBuffer(void) {
 
 	// Check parities
     if (flags.parityMin == rx_buffer->P1  &&
-        flags.parityHour == rx_buffer->P2  &&
-        flags.parityDate == rx_buffer->P3) 
+        flags.parityHour == rx_buffer->P2 &&
+        flags.parityDate == rx_buffer->P3 &&
+		rx_buffer->CEST != rx_buffer->CET) 
     { 
-      //convert the received buffer into time
+      //convert the received buffer into time	  	  	 
       time.Second = 0;
 	  time.Minute = rx_buffer->Min-((rx_buffer->Min/16)*6);
       time.Hour   = rx_buffer->Hour-((rx_buffer->Hour/16)*6);
@@ -271,7 +276,7 @@ bool DCF77::processBuffer(void) {
       time.Month  = rx_buffer->Month-((rx_buffer->Month/16)*6);
       time.Year   = 2000 + rx_buffer->Year-((rx_buffer->Year/16)*6) -1970;
 	  latestupdatedTime = makeTime(time);	 
-
+	  CEST = rx_buffer->CEST;
 	  //Parity correct
 	  return true;
 	} else {
@@ -282,7 +287,7 @@ bool DCF77::processBuffer(void) {
 
 /**
  * Get most recently received time 
- * Important: call receivedTimeUpdate() before
+ * Note, this only returns an time once, until the next update
  */
 time_t DCF77::getTime(void)
 {
@@ -291,6 +296,22 @@ time_t DCF77::getTime(void)
 	} else {
 		// Send out time, taking into account the difference between when the DCF time was received and the current time
 		time_t currentTime =latestupdatedTime + (now() - processingTimestamp);
+		return(currentTime);
+	}
+}
+
+/**
+ * Get most recently received time in UTC 
+ * Note, this only returns an time once, until the next update
+ */
+time_t DCF77::getUTCTime(void)
+{
+	if (!receivedTimeUpdate()) {
+		return(0);
+	} else {
+		// Send out time UTC time
+		int UTCTimeDifference = (CEST ? 2 : 1)*SECS_PER_HOUR;
+		time_t currentTime =latestupdatedTime - UTCTimeDifference + (now() - processingTimestamp);
 		return(currentTime);
 	}
 }
@@ -313,9 +334,9 @@ unsigned long long DCF77::runningBuffer = 0;
 unsigned long long DCF77::processingBuffer = 0;
 
 // Pulse flanks
-int DCF77::flankUp=0;
-int DCF77::flankDown=0;
-int DCF77::PreviousflankUp=0;
+int DCF77::leadingEdge=0;
+int DCF77::trailingEdge=0;
+int DCF77::PreviousLeadingEdge=0;
 bool DCF77::Up= false;
 
 // DCF77 and internal timestamps
@@ -323,7 +344,7 @@ time_t DCF77::latestupdatedTime= 0;
 time_t DCF77::previousUpdatedTime= 0;
 time_t DCF77::processingTimestamp= 0;
 time_t DCF77::previousProcessingTimestamp=0;
-
+unsigned char DCF77::CEST=0;
 DCF77::ParityFlags DCF77::flags = {0,0,0,0};
 
 

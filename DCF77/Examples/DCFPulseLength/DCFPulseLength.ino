@@ -1,6 +1,7 @@
 /*
-  CheckPulseLength.ino - DCF77 debug Example
-  Thijs Elenbaas, 2012
+ * DCFPulseLength.ino - DCF77 debug Example
+ * Thijs Elenbaas, 2012
+ * This example code is in the public domain.
  
   This simple example shows the pulse-to-pulse time and pulse lengths
   coming from the DCF decoder.

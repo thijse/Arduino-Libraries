@@ -1,6 +1,7 @@
 /*
-  CheckPulses.ino - DCF77 debug Example
-  Thijs Elenbaas, 2012
+ * DCFSignal.ino - DCF77 debug Example
+ * Thijs Elenbaas, 2012
+ * This example code is in the public domain.
  
   This simple example shows the raw signal coming from the DCF decoder.
   

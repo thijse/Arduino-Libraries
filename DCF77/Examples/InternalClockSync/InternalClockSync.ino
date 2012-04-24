@@ -1,7 +1,8 @@
 /*
- * ExampleDCF77.pde
+ * InternalClockSync.pde
  * example code illustrating time synced from a DCF77 receiver
-*  Thijs Elenbaas, 2012
+ * Thijs Elenbaas, 2012
+ * This example code is in the public domain.
  
   This example shows how to fetch a DCF77 time and synchronize
   the internal clock. In order for this example to give clear output,
@@ -9,10 +10,8 @@
   do this by commenting out   #define VERBOSE_DEBUG 1   in Utils.cpp. 
  */
 
-#include "Utils.h"
 #include "DCF77.h"
 #include "Time.h"
-using namespace Utils;
 
 #define DCF_PIN 2	         // Connection pin to DCF 77 device
 #define DCF_INTERRUPT 0		 // Interrupt number associated with pin
