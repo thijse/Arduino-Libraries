@@ -1,8 +1,12 @@
-#include "Arduino.h"
-#include <Time.h>
-
 #ifndef DCF77_h
 #define DCF77_h
+
+#if ARDUINO >= 100
+#include <Arduino.h> 
+#else
+#include <WProgram.h> 
+#endif
+#include <Time.h>
 
 #define MIN_TIME 1334102400     // Date: 11-4-2012
 #define MAX_TIME 4102444800     // Date:  1-1-2100
