@@ -23,7 +23,7 @@ void setup() {
 }
 
 void loop() {
-  int sensorValue = digitalRead(2);
+  int sensorValue = digitalRead(DCF77PIN);
   if (sensorValue==1 && prevSensorValue==0) { Serial.println("");   }
   digitalWrite(BLINKPIN, sensorValue);
   Serial.print(sensorValue);   
