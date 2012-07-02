@@ -18,13 +18,14 @@
   
   11 Apr 2012 - initial release 
   23 Apr 2012 - added UTC support
+  2  Jul 2012 - minor bugfix and additional noise rejection
 */
 
 #include <DCF77.h>       //https://github.com/thijse/Arduino-Libraries/downloads
 #include <Time.h>        //http://www.arduino.cc/playground/Code/Time
 #include <Utils.h>
 
-#define _DCF77_VERSION 0_9_5 // software version of this library
+#define _DCF77_VERSION 0_9_7 // software version of this library
 
 using namespace Utils;
 
@@ -91,13 +92,20 @@ inline void DCF77::bufferinit(void)
  */
 void DCF77::int0handler() {
 	int flankTime = millis();
-	int sensorValue = digitalRead(2);
+	int sensorValue = digitalRead(dCF77Pin);
 
 	// If flank is detected quickly after previous flank up
 	// this will be an incorrect pulse that we shall reject
 	if ((flankTime-PreviousLeadingEdge)<DCFRejectionTime) {
 		return;
 	}
+	
+	// If the detected pulse is too short it will be an
+	// incorrect pulse that we shall reject as well
+	if ((flankTime-leadingEdge)<DCFRejectPulseWidth) {
+		return;
+	}
+	
 	if(sensorValue==HIGH) {
 		if (!Up) {
 			// Flank up
