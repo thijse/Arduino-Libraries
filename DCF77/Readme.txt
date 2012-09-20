@@ -25,11 +25,11 @@ posts on DCF Hardware, DCF Signal and ultimately DCF Library
 
 *** Functional Overview ***
 
- DCF77(DCF77Pin, DCFinterrupt); // Initialize library
- time_t getTime();              // Returns the current time in CET
- time_t getUTCTime();           // Returns the current time in UTC
- Start();                       // Start listening to DCF77 signal
- Stop();                        // Stop listening to DCF77 signal
+ DCF77(DCF77Pin, DCFinterrupt, OnRisingFlank); // Initialize library
+ time_t getTime();                             // Returns the current time in CET
+ time_t getUTCTime();                          // Returns the current time in UTC
+ Start();                                      // Start listening to DCF77 signal
+ Stop();                                       // Stop listening to DCF77 signal
 
 *** Using the Library ***
 

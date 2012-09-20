@@ -23,6 +23,7 @@ private:
 	bool initialized;	
 	static int dCF77Pin;
 	static int dCFinterrupt;
+	static byte pulseStart;
 
 	// DCF77 and internal timestamps
 	static time_t previousUpdatedTime;
@@ -83,10 +84,9 @@ private:
 	bool static processBuffer(void);
 	void static appendSignal(unsigned char signal);
 
-public:
-	
+public:	
 	// Public Functions
-	DCF77(int DCF77Pin, int DCFinterrupt); 
+	DCF77(int DCF77Pin, int DCFinterrupt, bool OnRisingFlank=true); 
 	
 	static time_t getTime(void);
 	static time_t getUTCTime(void);

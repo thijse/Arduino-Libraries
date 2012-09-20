@@ -32,10 +32,12 @@ using namespace Utils;
 /**
  * Constructor
  */
-DCF77::DCF77(int DCF77Pin, int DCFinterrupt) 
+DCF77::DCF77(int DCF77Pin, int DCFinterrupt, bool OnRisingFlank) 
 {
-	dCF77Pin = DCF77Pin;
-	dCFinterrupt = DCFinterrupt;
+	dCF77Pin     = DCF77Pin;
+	dCFinterrupt = DCFinterrupt;	
+	pulseStart   = OnRisingFlank ? HIGH : LOW;
+	
 	if (!initialized) {  
 		pinMode(dCF77Pin, INPUT);	
 		initialize();
@@ -92,21 +94,23 @@ inline void DCF77::bufferinit(void)
  */
 void DCF77::int0handler() {
 	int flankTime = millis();
-	int sensorValue = digitalRead(dCF77Pin);
+	byte sensorValue = digitalRead(dCF77Pin);
 
 	// If flank is detected quickly after previous flank up
 	// this will be an incorrect pulse that we shall reject
 	if ((flankTime-PreviousLeadingEdge)<DCFRejectionTime) {
+		LogLn("rCT");
 		return;
 	}
 	
 	// If the detected pulse is too short it will be an
 	// incorrect pulse that we shall reject as well
 	if ((flankTime-leadingEdge)<DCFRejectPulseWidth) {
+	    LogLn("rPW");
 		return;
 	}
 	
-	if(sensorValue==HIGH) {
+	if(sensorValue==pulseStart) {
 		if (!Up) {
 			// Flank up
 			leadingEdge=flankTime;
@@ -329,6 +333,7 @@ time_t DCF77::getUTCTime(void)
  */
 int DCF77::dCF77Pin=0;
 int DCF77::dCFinterrupt=0;
+byte DCF77::pulseStart=HIGH;
 
 // Parameters shared between interupt loop and main loop
 
