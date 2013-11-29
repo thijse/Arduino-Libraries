@@ -1,0 +1,17 @@
+Code base for Ember Kit from Lower East Kitchen
+
+Licensed under Creative Commons Attribution-ShareAlike 3.0 Unported License
+http://lowereastkitchen.com
+
+Installation:
+1. Copy the Ember and PID_v1 folders to your Arduino libraries folder.
+2. Open the ember_arduino.pde file in the Arduino IDE.
+3. Load the file onto your chip.
+
+Ways to load onto files your chip:
+
+>>>Never use when plugged in!<<<
+
+** FTDI cable from computer to header on Ember Kit.
+** Remove ATMEGA328 and place in a programmer/Arduino socket.
+** Break out pins from an Arduino to the Ember Kit board.  From BLK to GRN, the FTDI pins are:   RESET, RX, TX, 5V, GND, GND
