@@ -20,8 +20,6 @@
 #ifndef EEPROMEX_h
 #define EEPROMEX_h
 
-#include <EEPROM.h>
-
 #if ARDUINO >= 100
 #include <Arduino.h> 
 #else
@@ -37,6 +35,9 @@
 #define EEPROMSizeATmega168   512     
 #define EEPROMSizeATmega328   1024     
 #define EEPROMSizeATmega1280  4096     
+#define EEPROMSizeATmega32u4  1024
+#define EEPROMSizeAT90USB1286 4096
+#define EEPROMSizeMK20DX128   2048
 
 #define EEPROMSizeUno         EEPROMSizeATmega328     
 #define EEPROMSizeUnoSMD      EEPROMSizeATmega328
@@ -45,6 +46,12 @@
 #define EEPROMSizeMega        EEPROMSizeATmega1280
 #define EEPROMSizeDiecimila   EEPROMSizeATmega168
 #define EEPROMSizeNano        EEPROMSizeATmega168
+#define EEPROMSizeTeensy2     EEPROMSizeATmega32u4
+#define EEPROMSizeLeonardo    EEPROMSizeATmega32u4
+#define EEPROMSizeMicro       EEPROMSizeATmega32u4
+#define EEPROMSizeYun         EEPROMSizeATmega32u4
+#define EEPROMSizeTeensy2pp   EEPROMSizeAT90USB1286
+#define EEPROMSizeTeensy3     EEPROMSizeMK20DX128
 
 class EEPROMClassEx
 {
@@ -89,7 +96,7 @@ class EEPROMClassEx
 	{
 		if (!isWriteOk(address+items*sizeof(T))) return 0;
 		unsigned int i;
-		for (i = 0; i < items; i++) 
+		for (i = 0; i < (unsigned int)items; i++)
 			readBlock<T>(address+(i*sizeof(T)),value[i]);
 		return i;
 	}
@@ -104,7 +111,7 @@ class EEPROMClassEx
 	{	
 		if (!isWriteOk(address+items*sizeof(T))) return 0;
 		unsigned int i;
-		for (i = 0; i < items; i++) 
+		for (i = 0; i < (unsigned int)items; i++)
 			  writeBlock<T>(address+(i*sizeof(T)),value[i]);
 		return i;
 	}
@@ -121,7 +128,7 @@ class EEPROMClassEx
 		int writeCount=0;
 		if (!isWriteOk(address+items*sizeof(T))) return 0;
 		unsigned int i;
-		for (i = 0; i < items; i++) 
+		for (i = 0; i < (unsigned int)items; i++)
 			  writeCount+= updateBlock<T>(address+(i*sizeof(T)),value[i]);
 		return writeCount;
 	}
@@ -131,13 +138,13 @@ class EEPROMClassEx
 		int writeCount=0;
 		if (!isWriteOk(address+sizeof(value))) return 0;
 		const byte* bytePointer = (const byte*)(const void*)&value;
-		for (unsigned int i = 0; i < sizeof(value); i++) {
+		for (unsigned int i = 0; i < (unsigned int)sizeof(value); i++) {
 			if (read(address)!=*bytePointer) {
 				write(address, *bytePointer);
 				writeCount++;		
 			}
 			address++;
-			*bytePointer++;
+			bytePointer++;
 		}
 		return writeCount;
 	}
