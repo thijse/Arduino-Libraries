@@ -38,7 +38,7 @@ extern "C" {
 }
 #include <stdio.h>
 #include <CmdMessenger.h>
-#include <Streaming.h>
+//#include <Streaming.h>
 
 #define _CMDMESSENGER_VERSION 3_0 // software version of this library
 

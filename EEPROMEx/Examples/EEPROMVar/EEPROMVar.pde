@@ -7,7 +7,7 @@
  */
 
 #include <EEPROMex.h>
-#include <EEPROMvar.h>
+#include <EEPROMVar.h>
 
 // start reading from the first byte (address 120) of the EEPROM
 
@@ -31,7 +31,7 @@ void readAndWriteVar(EEPROMVar<float> &floatVar) {
     floatVar.restore();  // restore EEPROMVar to EEPROM
     
     Serial.print("adress: ");
-    Serial.println(floatVar.getAdress());
+    Serial.println(floatVar.getAddress());
     Serial.print("input: ");
     Serial.println(input);
     Serial.print("output: ");

@@ -38,14 +38,14 @@ template<typename T> class EEPROMBackupVar
 	  EEPROMBackupVar(T init, int range, compareFunction compareFunc,unsigned long time=0) {
 		adressRange = range;
 		timeBetweenSaves = time*1000; // from sec to milisec
-		baseAddress = EEPROM.getAdress(sizeof(T)*adressRange);	
+		baseAddress = EEPROM.getAddress(sizeof(T)*adressRange);	
 		function = compareFunc;
 		position = -1;		
 		var = init;		
 	  }
 	  	 	
 	  void initialize(T init){	    
-		baseAddress = EEPROM.getAdress(sizeof(T)*adressRange);
+		baseAddress = EEPROM.getAddress(sizeof(T)*adressRange);
 		retreive(init);	
 	  }				
 			  
