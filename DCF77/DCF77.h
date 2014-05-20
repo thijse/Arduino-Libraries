@@ -97,8 +97,8 @@ public:
 	static void int0handler();
 	static int getCEST(); //0= CET/MEZ, 1=CEST/MESZ
 	static int getWeekday(); // 1-Monday, 2-Tuesday, 3-Wednesday...7-Sunday
-	static int getEncWeatherData();
-	static int getAlertData();
+	static int getEncWeatherData(); //get encrpted MeteoTime-Data (to be implemented) 
+	static int getAlertData(); // get Alert-Data for german Civil Alert System (to be implemented)
  };
 
 #endif
