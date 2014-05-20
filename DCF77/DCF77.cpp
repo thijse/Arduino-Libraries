@@ -99,14 +99,19 @@ void DCF77::int0handler() {
 	// If flank is detected quickly after previous flank up
 	// this will be an incorrect pulse that we shall reject
 	if ((flankTime-PreviousLeadingEdge)<DCFRejectionTime) {
-		LogLn("rCT");
+		Log("+");
+		delay(delayPost);
+		int flankTime = millis();
 		return;
 	}
 	
 	// If the detected pulse is too short it will be an
 	// incorrect pulse that we shall reject as well
 	if ((flankTime-leadingEdge)<DCFRejectPulseWidth) {
-	    LogLn("rPW");
+	    Log("-");
+	    delay(delayPre);
+	    int flankTime = millis();
+		byte sensorValue = digitalRead(dCF77Pin);
 		return;
 	}
 	
@@ -114,7 +119,8 @@ void DCF77::int0handler() {
 		if (!Up) {
 			// Flank up
 			leadingEdge=flankTime;
-			Up = true;		                
+			Up = true;
+			digitalWrite(13,HIGH);
 		} 
 	} else {
 		if (Up) {
@@ -128,7 +134,8 @@ void DCF77::int0handler() {
 			PreviousLeadingEdge = leadingEdge;       
 			// Distinguish between long and short pulses
 			if (difference < DCFSplitTime) { appendSignal(0); } else { appendSignal(1); }
-			Up = false;	 
+			digitalWrite(13,LOW);
+			Up = false;	
 		}
 	}  
 }
@@ -328,7 +335,24 @@ time_t DCF77::getUTCTime(void)
 	}
 }
 
-/**
+int DCF77::getCEST(void)
+{
+	return(CEST);
+}
+
+int DCF77::getWeekday(void)
+{
+	return(0);
+}
+int DCF77::getEncWeatherData(void)
+{
+	return(0);
+}
+int DCF77::getAlertData(void)
+{
+	return(0);
+}
+/*
  * Initialize parameters
  */
 int DCF77::dCF77Pin=0;
