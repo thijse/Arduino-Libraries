@@ -120,7 +120,6 @@ void DCF77::int0handler() {
 			// Flank up
 			leadingEdge=flankTime;
 			Up = true;
-			digitalWrite(13,HIGH);
 		} 
 	} else {
 		if (Up) {
@@ -134,7 +133,6 @@ void DCF77::int0handler() {
 			PreviousLeadingEdge = leadingEdge;       
 			// Distinguish between long and short pulses
 			if (difference < DCFSplitTime) { appendSignal(0); } else { appendSignal(1); }
-			digitalWrite(13,LOW);
 			Up = false;	
 		}
 	}  
