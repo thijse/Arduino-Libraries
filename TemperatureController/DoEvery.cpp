@@ -24,6 +24,7 @@ bool DoEvery::check() {
 }
 
 bool DoEvery::before(double threshTime) {
+	if (threshTime>=period) return true;
 	if (millis()-lastTime < threshTime) {
 		return true;
 	} else {
