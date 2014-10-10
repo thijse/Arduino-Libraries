@@ -27,7 +27,10 @@
  ******************************************************************************/
 
  #define _EEPROMEX_VERSION 1 // software version of this library
- #define _EEPROMEX_DEBUG     // Enables logging of maximum of writes and out-of-memory
+
+// leave debugging off by default
+// #define _EEPROMEX_DEBUG     // Enables logging of maximum of writes and out-of-memory
+
 /******************************************************************************
  * Constructors
  ******************************************************************************/
