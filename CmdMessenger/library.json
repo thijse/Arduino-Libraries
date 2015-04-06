@@ -1,0 +1,19 @@
+{
+  "name": "CmdMessenger",
+  "keywords": "protocol, message, communication, serial",
+  "description": "A serial messaging library for the Arduino and .NET/Mono platform",
+  "include": "CmdMessenger",
+  "exclude":
+  [
+    "CmdMessenger/CSharp",
+    "CmdMessenger/Documentation",
+    "CmdMessenger/Tools"
+  ],
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/thijse/Arduino-Libraries.git"
+  },
+  "frameworks": "arduino",
+  "platforms": "atmelavr"
+}
