@@ -2,7 +2,6 @@
 
 // This example shows the usage of the watchdog for communication over virtual serial port,
 // 
-// - Use bluetooth connection
 // - Use auto scanning and connecting
 // - Use watchdog 
 
