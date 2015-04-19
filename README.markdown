@@ -35,4 +35,4 @@ The library can
 And more. 
 
 
-With version 3 also comes a full implementation of the toolkit in C#, which runs both in [Mono](monodevelop.com/Download)  and [Visual Studio C# .NET](www.microsoft.com/visualstudio/eng#downloads). This allows for full 2-way communication between the Arduino controller and the PC.
+With version 3 also comes a full implementation of the toolkit in C#, which runs both in [Mono](http://monodevelop.com/Download)  and [Visual Studio C# .NET](http://www.microsoft.com/visualstudio/eng#downloads). This allows for full 2-way communication between the Arduino controller and the PC.
