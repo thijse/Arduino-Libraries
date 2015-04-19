@@ -1,10 +1,10 @@
-# CmdMessenger v3.6
+# CmdMessenger
 
 A serial messaging library for the Arduino and .NET/Mono platform
 
 ## Introduction
 
-CmdMessenger is a messaging library for the Arduino Platform (and .NET/Mono platform). Ituses the serial port as it's transport layer** 
+CmdMessenger is a messaging library for the Arduino Platform (and .NET/Mono platform). It supports multiple transport layers: serial port (over USB), Bluetooth ** 
 
 The message format is:
 ```
@@ -23,8 +23,6 @@ The library supports any primary data types, and zero to many multiple arguments
 
 With version 3.x also comes a full implementation of the toolkit in C#, which runs both in Mono (http://monodevelop.com/Download) and Visual Studio (http://www.microsoft.com/visualstudio/eng#downloads)
 This allows for full 2-way communication between the arduino controller and the PC.
-
-\** but it could easily be modified to work over Bluetooth or a web interface.
 
 
 ## Requirements
@@ -181,6 +179,14 @@ An example for use with Max5 / MaxMSP was included up until version 2. (it can s
 Since we have not been able to check it wil Max/MaxMSP, the example was removed.
 
 ## Changelog 
+
+### CmdMessenger v4.0.0
+* [Arduino] Additional autoConnect sample
+* [.Net/.Mono] Full Threading redesign.
+* [.Net/.Mono] AutoConnect & watchdog functionality. 
+* [.Net/.Mono] Tested Linux compatibility
+* [.Net/.Mono] Visual Basic samples. 
+* [.Net/.Mono] Native Bluetooth support (windows only)
 
 ### CmdMessenger v3.6
 * [Arduino] Bugfix: approx 1 in 1000 commands failed, when multiple binary parameters are sent over
