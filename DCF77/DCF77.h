@@ -12,9 +12,11 @@
 #define MAX_TIME 4102444800     // Date:  1-1-2100
 
 #define DCFRejectionTime 700	// Pulse-to-Pulse rejection time. 
-#define DCFRejectPulseWidth 50  // Minimal pulse width
+#define DCFRejectPulseWidth 70  // Minimal pulse width
 #define DCFSplitTime 180		// Specifications distinguishes pulse width 100 ms and 200 ms. In practice we see 130 ms and 230
 #define DCFSyncTime 1500		// Specifications defines 2000 ms pulse for end of sequence
+#define delayPre 3				// Delay, if a short peak is detected before a pulse
+#define delayPost 10			// Delay for peaks after detecting a pulse. If double or more + are shown in debug mode, increase this value
 
 class DCF77 {
 private:
@@ -46,7 +48,7 @@ private:
 	  unsigned long long Weekday	:3;	// day of week
 	  unsigned long long Month		:5;	// month
 	  unsigned long long Year		:8;	// year (5 -> 2005)
-	  unsigned long long P3			:1;	// parity
+	  unsigned long long P3			:1;	// parity Date
 	};
 	
 	
@@ -93,6 +95,10 @@ public:
 	static void Start(void);
 	static void Stop(void);
 	static void int0handler();
+	static int getCEST(); //0= CET/MEZ, 1=CEST/MESZ
+	static int getWeekday(); // 1-Monday, 2-Tuesday, 3-Wednesday...7-Sunday
+	static int getEncWeatherData(); //get encrpted MeteoTime-Data (to be implemented) 
+	static int getAlertData(); // get Alert-Data for german Civil Alert System (to be implemented)
  };
 
 #endif

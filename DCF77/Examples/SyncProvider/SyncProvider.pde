@@ -71,7 +71,7 @@ void printDigits(int digits){
   Serial.print(digits);
 }
 
-unsigned long getDCFTime()
+time_t getDCFTime()
 { 
   time_t DCFtime = DCF.getTime();
   // Indicator that a time check is done
