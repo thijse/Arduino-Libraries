@@ -1,6 +1,6 @@
-# Arduino libraries 
+# NOTICE 
 
-The Arduino libraries in this repository are meant to be copied and used in your own projects. The source code is original work, but where it needs other libraries to function properly I will add complete releases as zip files in the folder **Packaged Libraries**
+This Repository containing multiple libraries  has been suspended. Following Arduino Library guidelines, every library now has it's own repository.
 
 ## DCF77
 
@@ -13,6 +13,9 @@ The DCF77 Library download. Example sketches have been added to
    time zones. In order to exploit all features in the library, Both the Time and 
    TimeZone library are included.
    
+This library can now be found here: https://github.com/thijse/Arduino-DCF77
+   
+   
 ## EEPROMex
 
 The EEPROMex library is an extension of the standard Arduino EEPROM library. It extends the functionality of the original Arduino EEPROM library with:
@@ -20,6 +23,9 @@ The EEPROMex library is an extension of the standard Arduino EEPROM library. It 
 - Reading, writing to basic types and single bits
 - Reading, writing of any data format. This can be for example structs, strings, etc.
 - Reading, writing of arrays of any format.  
+
+This library can now be found here: https://github.com/thijse/Arduino-EEPROMEx
+
 
 ## CmdMessenger 
 
@@ -32,7 +38,4 @@ The library can
 - Write and read all primary data types
 - Attach callback functions any received command
 
-And more. 
-
-
-With version 3 also comes a full implementation of the toolkit in C#, which runs both in [Mono](http://monodevelop.com/Download)  and [Visual Studio C# .NET](http://www.microsoft.com/visualstudio/eng#downloads). This allows for full 2-way communication between the Arduino controller and the PC.
+This library can now be found here: https://github.com/thijse/Arduino-CmdMessenger
