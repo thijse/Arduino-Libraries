@@ -1,6 +1,6 @@
 # NOTICE 
 
-This Repository containing multiple libraries  has been suspended. Following Arduino Library guidelines, every library now has it's own repository.
+This Repository has been suspended. It used to contain multiple Arduino libraries. However, following Arduino Library guidelines, each of these libraries has gotten it's own repository. See below to find these
 
 ## DCF77
 
